@@ -1,3 +1,3 @@
 # Base file of app 
-crie uma variavel  "Frutas"
-modifique a variavel "Frutas" para  50
+crie uma variavel  "Frutas", modifique a variavel "Frutas" para  50
+,crie uma variavel  "Loja", modifique a variavel "Loja" para  50, Some as variaveis "Loja" "Frutas"

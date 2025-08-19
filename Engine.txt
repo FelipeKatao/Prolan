@@ -8,3 +8,7 @@ criar,variavel
 modificar,variavel
 &T* = &v
 &END
+
+somar,variavel
+&T&v+
+&END

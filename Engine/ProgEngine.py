@@ -7,6 +7,14 @@ class ProgEngine():
         self.Pipeline = ""
         self.ReturnData = []
 
+    def GetContextData(self,textMode:str):
+       textMode = textMode.split(",")
+       CountWords = len(textMode)-1
+       Sentences = []
+       for i in textMode:
+            self.ResponseData(i)
+
+
     def ResponseData(self,Text):
         self.Pipeline = Text
         self.ReturnData = {
@@ -41,7 +49,6 @@ class ProgEngine():
         
 
     def GetContext(self,Context,Interpreter):
-        print(Interpreter)
         if "&T*" in Interpreter:
             values = Context["Vars"].split(" ")
             for i in values:
@@ -50,6 +57,18 @@ class ProgEngine():
                         Interpreter = Interpreter.replace("&v",Context["Vars"].split(" ")[len(Context["Vars"].split(" "))-1])
                     return Interpreter.replace("&T*",i.replace('"',"").replace(" ","").replace("\n",""))
             return " "
+        if "&T&v+" in Interpreter:
+            values:list = Context["Vars"].split('"')
+            values.remove(values[0])
+            ListValidValues =[]
+            ValueA = ""
+            for i in values:
+                if len(str(i).strip(' ')) > 0:
+                   ListValidValues.append(i)
+                   ValueA += i+"+"
+                   
+            return str(ListValidValues[0])+"="+ValueA[:-1]
+
         
 
     def GetEngine(self,Value,Engine="Engine.txt"):

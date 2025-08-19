@@ -16,7 +16,10 @@ def RenderData_Action():
         "buscar elemento no sistema",
         "modifique o elemento para",
         "modificar o texto para",
-        "mude a variavel"
+        "mude a variavel",
+        "Some a variavel",
+        "somar o texto",
+        "poderia somar o texto"
     ]
 
     Intenttion = [
@@ -31,7 +34,10 @@ def RenderData_Action():
         "consultar",
         "modificar",
         "modificar",
-        "modificar"
+        "modificar",
+        "somar",
+        "somar",
+        "somar"
     ]
 
     model = make_pipeline(TfidfVectorizer(), LogisticRegression())
