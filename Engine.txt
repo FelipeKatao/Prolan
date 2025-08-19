@@ -1,0 +1,10 @@
+# engine of Prolan 
+# DEVELOPER BY: FELIPE KATAO  2025
+#VARS MANIPULATION 
+criar,variavel
+&T* = 0    
+&END
+
+modificar,variavel
+&T* = &v
+&END
