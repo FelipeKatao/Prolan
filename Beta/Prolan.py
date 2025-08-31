@@ -16,8 +16,6 @@ class Prolan:
              if v is not None:
                 List_Tokens+= str(v.get("Id"))
                 self.VectorResult.append(str(v.get("Id")))
-             else:
-                self.VectorResult.append(0)
         if List_Tokens == "" : List_Tokens =0
         return int(List_Tokens)
     
