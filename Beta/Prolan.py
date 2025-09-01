@@ -1,4 +1,5 @@
 
+    
 
 class Prolan:
     def __init__(self):
@@ -6,6 +7,7 @@ class Prolan:
         self.Intent = {}
         self.VectorResult = []
         self.StopSetences = []
+        self.ImportantTerm = 1
         self.ErrorIntent = "Intent error: Not exists"
 
 
@@ -34,12 +36,46 @@ class Prolan:
         Sentence = ""
         for i in text.split(" "):
             if self.DictionaryBase.get(i):
-                if self.DictionaryBase.get(i)["Id"] == 1 and len(Sentence) >=1 or self.DictionaryBase.get(i)["Id"] == 1 and len(Sentence_list) >=1:
+                if self.DictionaryBase.get(i)["Id"] == self.ImportantTerm and len(Sentence) >=self.ImportantTerm or self.DictionaryBase.get(i)["Id"] == self.ImportantTerm and len(Sentence_list) >=1:
                     Sentence_list.append(Sentence)
                     Sentence = ""
             Sentence+=i+" "
         Sentence_list.append(Sentence)
         return Sentence_list
+
+class TokenVector:
+    def __init__(self,ObjectProg:Prolan,Text:str):
+        self.Object = ObjectProg
+        self.Text = Text
+        self.Value = None
+        if self.Object:
+             self.Value =  [self.CreateVector()]
+
+    def __repr__(self):
+        return str(self.Value)
+    
+    def __add__(self,val):
+        self.Value.append(val)
+        return self.Value
+
+    def CreateVector(self):
+        Text_sentence = self.Object.TrimBySentence(self.Text)
+        Tokens = []
+        for  i in Text_sentence:
+            for x in i.split(" "):
+                Value = self.Object.DictionaryBase.get(x,0)
+                if Value != 0 : Tokens.append(Value["Id"]) 
+                else:  
+                    if len(x) >=1:
+                        Tokens.append(0)
+        return Tokens
+
+    def ClearZeros(self):
+        return [[x for x in y if x!=0] for y in self.Value]   
+
+
+
+        
 
 v =  Prolan()
 v.AddNewIntent(132,"Criacao_variavel","Criar uma variavel")
@@ -48,8 +84,8 @@ v.AddNewWord("Criar",1,"","")
 v.AddNewWord("variavel",2,"","")
 v.AddNewWord("Nova",3,"","")
 v.AddNewWord("valor",5,"","")
-print(v.TrimBySentence("Eu quero criar   uma  nova variavel criar variavel com valor 4 "))
-#print(v.ReturnData("Eu quero criar   uma  nova variavel criar variavel com valor 4 ")["Return"])
-Frase = v.TrimBySentence("Eu quero criar   uma  nova variavel criar variavel com valor 4 ")
-for i in Frase:
-    print(v.ReturnData(i))
+Frase = "Eu quero criar   uma  nova variavel criar variavel com valor 4"
+
+# criação de um novo tipo chamda Vetor de tokens
+Vetor = TokenVector(v,Frase)
+print(Vetor.ClearZeros())
