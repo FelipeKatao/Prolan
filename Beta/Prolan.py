@@ -67,6 +67,30 @@ class Prolan:
         Sentence_list.append(Sentence)
         return Sentence_list
 
+class VectorContext:
+    def __init__(self,ObjectProg:Prolan,Text:str):
+        self.Obj = ObjectProg
+        self.Text = Text
+        self.VectorContext = None
+        if self.Obj:
+            self.VectorContext = self.GetContext()
+
+    def GetContext(self):
+        return self.Obj.CreateVector2d()
+    
+    def __repr__(self):
+        return str(self.VectorContext)
+    
+    def GetContextByClass(self,ClassNome):
+        Value = []
+        for i in self.VectorContext:
+            if  ClassNome in i:
+                Value.append(self.VectorContext[i])
+        return Value
+
+
+
+
 class TokenVector:
     def __init__(self,ObjectProg:Prolan,Text:str):
         self.Object = ObjectProg
@@ -137,10 +161,7 @@ Frase = "Eu quero criar   uma  nova variavel chamada abc criar variavel com valo
 
 # criação de um novo tipo chamda Vetor de tokens
 Vetor = TokenVector(v,Frase)
-print(Vetor.ClearZeros())
-print(Vetor.FeaturesCalcs)
 v.Tokenize(Frase)
 
-print(v.GetContext)
-print(v.KeyContext)
-print(v.CreateVector2d())
+Context = VectorContext(v,Frase)
+print(Context.GetContextByClass("variavel"))
